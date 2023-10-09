@@ -1,7 +1,7 @@
 let dataSet;
 let dataPoint;
-let yearSlider;
-let yearSelected = 2010;
+let radioButton;
+let yearSelected;
 let counterValue_Initial = 0;
 let counterValue_Final = 0;
 
@@ -31,16 +31,19 @@ function setup()
 {
   createCanvas(windowWidth, windowHeight);
   background(0);
-
   dataPoint = Object.values(dataSet);
 
-  textSize(16);
-  fill(255);
-  text("Year Selected: ", width-250, height-(height-75));
-
-  yearSlider = createSlider(yearSelected, 2014, yearSelected, 1);
-  yearSlider.position(width-250,25);
-  yearSlider.style("width", "200px");
+  radioButton = createRadio();
+  radioButton.option('2010');
+  radioButton.option('2011');
+  radioButton.option('2012');
+  radioButton.option('2013');
+  radioButton.option('2014');
+  
+  radioButton.position(width/1.54, height-(height-175));
+  radioButton.style("width","350px");
+  radioButton.style("font-family","Rubik");
+  radioButton.style("font-size","20px");
 
   for(let i=0; i<dataPoint.length; i++)
   {
@@ -63,6 +66,8 @@ function setup()
         break;
     }
   }
+  
+  textInit();
 }
 
 function circleStyleTemp(strokeForTemp)
@@ -73,19 +78,19 @@ function circleStyleTemp(strokeForTemp)
   {
     stroke('Cyan');
   }
-  else if(strokeForTemp > -10 && strokeForTemp <= 0)
+  else if(strokeForTemp > -10 && strokeForTemp <= 5)
   {
     stroke('Blue');
   }
-  else if(strokeForTemp > 0 && strokeForTemp <= 20)
+  else if(strokeForTemp > 5 && strokeForTemp <= 10)
   {
     stroke('Yellow');
   }
-  else if(strokeForTemp > 20 && strokeForTemp <= 35)
+  else if(strokeForTemp > 10 && strokeForTemp <= 25)
   {
     stroke('Orange');
   }
-  else if(strokeForTemp > 35)
+  else if(strokeForTemp > 25)
   {
     stroke('Red');
   }
@@ -95,23 +100,23 @@ function circleStylePM25(strokeForPM25)
 {
   noFill();
   strokeWeight(1);
-  if(strokeForPM25 >= 0 && strokeForPM25 <= 200)
+  if(strokeForPM25 >= 0 && strokeForPM25 <= 100)
   {
     stroke('Chartreuse');
   }
-  else if(strokeForPM25 > 200 && strokeForPM25 <= 400)
+  else if(strokeForPM25 > 100 && strokeForPM25 <= 250)
   {
     stroke('DarkGreen');
   }
-  else if(strokeForPM25 > 400 && strokeForPM25 <= 600)
+  else if(strokeForPM25 > 250 && strokeForPM25 <= 400)
   {
     stroke('Yellow');
   }
-  else if(strokeForPM25 > 600 && strokeForPM25 <= 800)
+  else if(strokeForPM25 > 400 && strokeForPM25 <= 500)
   {
     stroke('Orange');
   }
-  else if(strokeForPM25 > 800)
+  else if(strokeForPM25 > 500)
   {
     stroke('Red');
   }
@@ -121,23 +126,23 @@ function circleStylePress(strokeForPress)
 {
   noFill();
   strokeWeight(1);
-  if(strokeForPress <= 1000)
+  if(strokeForPress <= 1010)
   {
     stroke('GreenYellow');
   }
-  else if(strokeForPress > 1000 && strokeForPress <= 1010)
+  else if(strokeForPress > 1010 && strokeForPress <= 1015)
   {
     stroke('LawnGreen');
   }
-  else if(strokeForPress > 1010 && strokeForPress <= 1025)
+  else if(strokeForPress > 1015 && strokeForPress <= 1025)
   {
     stroke('MediumSpringGreen');
   }
-  else if(strokeForPress > 1025 && strokeForPress <= 1040)
+  else if(strokeForPress > 1025 && strokeForPress <= 1035)
   {
     stroke('MediumSeaGreen');
   }
-  else if(strokeForPress > 1040)
+  else if(strokeForPress > 1035)
   {
     stroke('Green');
   }
@@ -147,25 +152,25 @@ function circleStyleDewp(strokeForDewp)
 {
   noFill();
   strokeWeight(1);
-  if(strokeForDewp <= -20)
+  if(strokeForDewp <= -23)
   {
     stroke('Cyan');
   }
-  else if(strokeForDewp > -20 && strokeForDewp <= 0)
+  else if(strokeForDewp > -23 && strokeForDewp <= -18)
   {
     stroke('DeepSkyBlue');
   }
-  else if(strokeForDewp > 0 && strokeForDewp <= 15)
+  else if(strokeForDewp > -18 && strokeForDewp <= -10)
   {
     stroke('Blue');
   }
-  else if(strokeForDewp > 15 && strokeForDewp <= 25)
+  else if(strokeForDewp > -10 && strokeForDewp <= -2)
   {
     stroke('DarkBlue');
   }
-  else if(strokeForDewp > 25)
+  else if(strokeForDewp > -2)
   {
-    stroke('Indigo');
+    stroke('BlueViolet');
   }
 }
 
@@ -177,11 +182,11 @@ function vizTemp(loopCounter_Initial, loopCounter_Final)
     maxTemp = max(maxTemp,dataPoint[i].TEMP);
   }
 
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+100; i++)
+  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
   {
-    circleDim = map(dataPoint[i].TEMP, minTemp, maxTemp, 5, 350);
+    circleDim = map(dataPoint[i].TEMP, minTemp, maxTemp, 10, 400);
     circleStyleTemp(dataPoint[i].TEMP);
-    ellipse(width/6, height/3, circleDim);
+    ellipse(width/6, height/3.5, circleDim);
   }
 }
 
@@ -193,11 +198,11 @@ function vizPM25(loopCounter_Initial, loopCounter_Final)
     maxPM25 = max(maxPM25,dataPoint[i]["pm2.5"]);
   }
 
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+100; i++)
+  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
   {
-    circleDim = map(dataPoint[i]["pm2.5"], minPM25, maxPM25, 5, 350);
+    circleDim = map(dataPoint[i]["pm2.5"], minPM25, maxPM25, 10, 350);
     circleStylePM25(dataPoint[i]["pm2.5"]);
-    ellipse(width/2, height/3, circleDim);
+    ellipse(width/2.5, height/3.5, circleDim);
   }
 }
 
@@ -209,11 +214,11 @@ function vizPress(loopCounter_Initial, loopCounter_Final)
     maxPress = max(maxPress,dataPoint[i].PRES);
   }
 
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+100; i++)
+  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
   {
-    circleDim = map(dataPoint[i].PRES, minPress, maxPress, 5, 200);
+    circleDim = map(dataPoint[i].PRES, minPress, maxPress, 10, 265);
     circleStylePress(dataPoint[i].PRES);
-    ellipse(width/6, height/1.5, circleDim);
+    ellipse(width/6, height/1.3, circleDim);
   }
 }
 
@@ -225,92 +230,117 @@ function vizDewp(loopCounter_Initial, loopCounter_Final)
     maxDewp = max(maxDewp,dataPoint[i].DEWP);
   }
 
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+100; i++)
+  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
   {
-    circleDim = map(dataPoint[i].DEWP, minDewp, maxDewp, 5, 350);
+    circleDim = map(dataPoint[i].DEWP, minDewp, maxDewp, 5, 420);
     circleStyleDewp(dataPoint[i].DEWP);
-    ellipse(width/2, height/1.5, circleDim);
+    ellipse(width/2.5, height/1.3, circleDim);
   }
+}
+
+function textInit()
+{
+  fill(255);
+  strokeWeight(0);
+  textSize(32);
+  textFont("Rubik");
+  text("BEIJING AIR QUALITY", width/1.52, height-(height-100));
+  textSize(15);
+  fill(255,0,0);
+  text("- INTERACTIVE DATA VISUALIZATION -", width/1.49, height-(height-122));
+
+  fill(255);
+  textSize(18);
+  text("<< Select Year >>", width/1.41, height-(height-160));
+}
+
+function textGen()
+{
+  fill(255);
+  strokeWeight(0);
+  textSize(25);
+  textFont("Rubik");
+  text("TEMPERATURE", width/8.75, height/10);
+  text("PM2.5", width/2.65, height/10);
+  text("PRESSURE", width/8, height/1.75);
+  text("DEW POINT", width/2.8, height/1.75);
+
+  textInit();
 }
 
 function draw()
 {
-  yearSelected = yearSlider.value();
+  yearSelected = radioButton.value();
   switch(yearSelected)
   {
-    case 2010:
+    case '2010':
       counterValue_Initial = 0;
       counterValue_Final = counter2010;
 
       fill(0);
       strokeWeight(0);
-      rect(0, 0, width/1.5, height);
+      rect(0, 0, width, height);
       vizTemp(counterValue_Initial, counterValue_Final);
       vizPM25(counterValue_Initial, counterValue_Final);
       vizPress(counterValue_Initial, counterValue_Final);
       vizDewp(counterValue_Initial, counterValue_Final);
+      textGen();
       break;
 
-    case 2011:
+    case '2011':
       counterValue_Initial = counter2010;
       counterValue_Final = (counter2010 + counter2011);
 
       fill(0);
       strokeWeight(0);
-      rect(0, 0, width/1.5, height);
+      rect(0, 0, width, height);
       vizTemp(counterValue_Initial, counterValue_Final);
       vizPM25(counterValue_Initial, counterValue_Final);
       vizPress(counterValue_Initial, counterValue_Final);
       vizDewp(counterValue_Initial, counterValue_Final);
+      textGen();
       break;
 
-    case 2012:
+    case '2012':
       counterValue_Initial = counter2011;
       counterValue_Final = (counter2010 + counter2011 + counter2012);
 
       fill(0);
       strokeWeight(0);
-      rect(0, 0, width/1.5, height);
+      rect(0, 0, width, height);
       vizTemp(counterValue_Initial, counterValue_Final);
       vizPM25(counterValue_Initial, counterValue_Final);
       vizPress(counterValue_Initial, counterValue_Final);
       vizDewp(counterValue_Initial, counterValue_Final);
+      textGen();
       break;
 
-    case 2013:
+    case '2013':
       counterValue_Initial = counter2012;
       counterValue_Final = (counter2010 + counter2011 + counter2012 + counter2013);
 
       fill(0);
       strokeWeight(0);
-      rect(0, 0, width/1.5, height);
+      rect(0, 0, width, height);
       vizTemp(counterValue_Initial, counterValue_Final);
       vizPM25(counterValue_Initial, counterValue_Final);
       vizPress(counterValue_Initial, counterValue_Final);
       vizDewp(counterValue_Initial, counterValue_Final);
+      textGen();
       break;
 
-    case 2014:
+    case '2014':
       counterValue_Initial = counter2013;
       counterValue_Final = (counter2010 + counter2011 + counter2012 + counter2013 + counter2014);
 
       fill(0);
       strokeWeight(0);
-      rect(0, 0, width/1.5, height);
+      rect(0, 0, width, height);
       vizTemp(counterValue_Initial, counterValue_Final);
       vizPM25(counterValue_Initial, counterValue_Final);
       vizPress(counterValue_Initial, counterValue_Final);
       vizDewp(counterValue_Initial, counterValue_Final);
+      textGen();
       break;
   }
-}
-
-function mousePressed()
-{
-  noLoop();
-}
-
-function mouseReleased()
-{
-  loop();
 }
