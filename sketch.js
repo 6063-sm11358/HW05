@@ -1,5 +1,6 @@
 let dataSet;
 let dataPoint;
+let projectFont;
 let radioButton;
 let yearSelected;
 let counterValue_Initial = 0;
@@ -25,6 +26,7 @@ let circleDim = 0;
 function preload()
 {
   dataSet = loadJSON("https://dm-gy-6063-2023f-d.github.io/assets/homework/05/Beijing-PM2.5/Beijing-PM2.5.json");
+  projectFont = loadFont("./Rubik.ttf");
 }
 
 function setup()
@@ -174,12 +176,21 @@ function circleStyleDewp(strokeForDewp)
   }
 }
 
-function vizTemp(loopCounter_Initial, loopCounter_Final)
+function vizData(loopCounter_Initial, loopCounter_Final)
 {
   for(let i=loopCounter_Initial; i<loopCounter_Final; i++)
   {
     minTemp = min(minTemp,dataPoint[i].TEMP);
     maxTemp = max(maxTemp,dataPoint[i].TEMP);
+
+    minPM25 = min(minPM25,dataPoint[i]["pm2.5"]);
+    maxPM25 = max(maxPM25,dataPoint[i]["pm2.5"]);
+
+    minPress = min(minPress,dataPoint[i].PRES);
+    maxPress = max(maxPress,dataPoint[i].PRES);
+
+    minDewp = min(minDewp,dataPoint[i].DEWP);
+    maxDewp = max(maxDewp,dataPoint[i].DEWP);
   }
 
   for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
@@ -187,51 +198,15 @@ function vizTemp(loopCounter_Initial, loopCounter_Final)
     circleDim = map(dataPoint[i].TEMP, minTemp, maxTemp, 10, 400);
     circleStyleTemp(dataPoint[i].TEMP);
     ellipse(width/6, height/3.5, circleDim);
-  }
-}
 
-function vizPM25(loopCounter_Initial, loopCounter_Final)
-{
-  for(let i=loopCounter_Initial; i<loopCounter_Final; i++)
-  {
-    minPM25 = min(minPM25,dataPoint[i]["pm2.5"]);
-    maxPM25 = max(maxPM25,dataPoint[i]["pm2.5"]);
-  }
-
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
-  {
     circleDim = map(dataPoint[i]["pm2.5"], minPM25, maxPM25, 10, 350);
     circleStylePM25(dataPoint[i]["pm2.5"]);
     ellipse(width/2.5, height/3.5, circleDim);
-  }
-}
 
-function vizPress(loopCounter_Initial, loopCounter_Final)
-{
-  for(let i=loopCounter_Initial; i<loopCounter_Final; i++)
-  {
-    minPress = min(minPress,dataPoint[i].PRES);
-    maxPress = max(maxPress,dataPoint[i].PRES);
-  }
-
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
-  {
     circleDim = map(dataPoint[i].PRES, minPress, maxPress, 10, 265);
     circleStylePress(dataPoint[i].PRES);
     ellipse(width/6, height/1.3, circleDim);
-  }
-}
 
-function vizDewp(loopCounter_Initial, loopCounter_Final)
-{
-  for(let i=loopCounter_Initial; i<loopCounter_Final; i++)
-  {
-    minDewp = min(minDewp,dataPoint[i].DEWP);
-    maxDewp = max(maxDewp,dataPoint[i].DEWP);
-  }
-
-  for(let i=loopCounter_Initial; i<loopCounter_Initial+1000; i++)
-  {
     circleDim = map(dataPoint[i].DEWP, minDewp, maxDewp, 5, 420);
     circleStyleDewp(dataPoint[i].DEWP);
     ellipse(width/2.5, height/1.3, circleDim);
@@ -243,7 +218,7 @@ function textInit()
   fill(255);
   strokeWeight(0);
   textSize(32);
-  textFont("Rubik");
+  textFont(projectFont);
   text("BEIJING AIR QUALITY", width/1.52, height-(height-100));
   textSize(15);
   fill(255,0,0);
@@ -259,7 +234,7 @@ function textGen()
   fill(255);
   strokeWeight(0);
   textSize(25);
-  textFont("Rubik");
+  textFont(projectFont);
   text("TEMPERATURE", width/8.75, height/10);
   text("PM2.5", width/2.65, height/10);
   text("PRESSURE", width/8, height/1.75);
@@ -280,10 +255,8 @@ function draw()
       fill(0);
       strokeWeight(0);
       rect(0, 0, width, height);
-      vizTemp(counterValue_Initial, counterValue_Final);
-      vizPM25(counterValue_Initial, counterValue_Final);
-      vizPress(counterValue_Initial, counterValue_Final);
-      vizDewp(counterValue_Initial, counterValue_Final);
+
+      vizData(counterValue_Initial, counterValue_Final);
       textGen();
       break;
 
@@ -294,10 +267,8 @@ function draw()
       fill(0);
       strokeWeight(0);
       rect(0, 0, width, height);
-      vizTemp(counterValue_Initial, counterValue_Final);
-      vizPM25(counterValue_Initial, counterValue_Final);
-      vizPress(counterValue_Initial, counterValue_Final);
-      vizDewp(counterValue_Initial, counterValue_Final);
+
+      vizData(counterValue_Initial, counterValue_Final);
       textGen();
       break;
 
@@ -308,10 +279,8 @@ function draw()
       fill(0);
       strokeWeight(0);
       rect(0, 0, width, height);
-      vizTemp(counterValue_Initial, counterValue_Final);
-      vizPM25(counterValue_Initial, counterValue_Final);
-      vizPress(counterValue_Initial, counterValue_Final);
-      vizDewp(counterValue_Initial, counterValue_Final);
+
+      vizData(counterValue_Initial, counterValue_Final);
       textGen();
       break;
 
@@ -322,10 +291,8 @@ function draw()
       fill(0);
       strokeWeight(0);
       rect(0, 0, width, height);
-      vizTemp(counterValue_Initial, counterValue_Final);
-      vizPM25(counterValue_Initial, counterValue_Final);
-      vizPress(counterValue_Initial, counterValue_Final);
-      vizDewp(counterValue_Initial, counterValue_Final);
+
+      vizData(counterValue_Initial, counterValue_Final);
       textGen();
       break;
 
@@ -336,10 +303,8 @@ function draw()
       fill(0);
       strokeWeight(0);
       rect(0, 0, width, height);
-      vizTemp(counterValue_Initial, counterValue_Final);
-      vizPM25(counterValue_Initial, counterValue_Final);
-      vizPress(counterValue_Initial, counterValue_Final);
-      vizDewp(counterValue_Initial, counterValue_Final);
+      
+      vizData(counterValue_Initial, counterValue_Final);
       textGen();
       break;
   }
