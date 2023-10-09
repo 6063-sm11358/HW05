@@ -14,7 +14,7 @@ For the final result, in addition to my idea, I had taken some inspiration from 
 
 The one thing I changed between the initial sketch and the final render is how one navigates between the years. I had initially coded a slider to scroll through the year values, but later changed it to radio buttons as I felt that to be more intuitive and better, implementation-wise.
 
-In the visualization, I've calculated the *min.* and *max.* for all the fields, and have accordingly mapped the circle strokes to conform to that range:  
+As the dataset contains *hourly* data for all the different parameters, my assignment depicts that "hourly quantity" in a pie-chart form. Each stroke represents an individual field value. In the visualization, I've calculated the *min.* and *max.* for all the fields, and have accordingly mapped the circle strokes to conform to that range:  
 ```
 circleDim = map(dataPoint[i].TEMP, minTemp, maxTemp, 10, 400);
 circleDim = map(dataPoint[i]["pm2.5"], minPM25, maxPM25, 10, 350);
@@ -22,3 +22,5 @@ circleDim = map(dataPoint[i].PRES, minPress, maxPress, 10, 265);
 circleDim = map(dataPoint[i].DEWP, minDewp, maxDewp, 5, 420);
 ```  
 Similarly, based on the minimum and maximum values, I've color-coded sub-ranges within a parameter's full gamut. (The visualization legend can be seen in the above screenshot)
+
+With this, one can gather quantifiable insights regarding *temperature*, *PM2.5 concentration*, *pressue*, and *dew point* variations in Beijing over the course of 5 years (2010-2014).
