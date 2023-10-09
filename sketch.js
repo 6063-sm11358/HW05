@@ -3,6 +3,7 @@ let dataPoint;
 let projectFont;
 let radioButton;
 let yearSelected;
+let vizLegend;
 let counterValue_Initial = 0;
 let counterValue_Final = 0;
 
@@ -27,6 +28,7 @@ function preload()
 {
   dataSet = loadJSON("https://dm-gy-6063-2023f-d.github.io/assets/homework/05/Beijing-PM2.5/Beijing-PM2.5.json");
   projectFont = loadFont("./Rubik.ttf");
+  vizLegend = loadImage("./vizLegend.jpg");
 }
 
 function setup()
@@ -42,7 +44,7 @@ function setup()
   radioButton.option('2013');
   radioButton.option('2014');
   
-  radioButton.position(width/1.54, height-(height-175));
+  radioButton.position(width/1.53, height/4.2);
   radioButton.style("width","350px");
   radioButton.style("font-family","Rubik");
   radioButton.style("font-size","20px");
@@ -219,14 +221,14 @@ function textInit()
   strokeWeight(0);
   textSize(32);
   textFont(projectFont);
-  text("BEIJING AIR QUALITY", width/1.52, height-(height-100));
+  text("BEIJING AIR QUALITY", width/1.52, height/7.3);
   textSize(15);
   fill(255,0,0);
-  text("- INTERACTIVE DATA VISUALIZATION -", width/1.49, height-(height-122));
+  text("- INTERACTIVE DATA VISUALIZATION -", width/1.49, height/6.1);
 
   fill(255);
   textSize(18);
-  text("<< Select Year >>", width/1.41, height-(height-160));
+  text("<< Select Year >>", width/1.41, height/4.5);
 }
 
 function textGen()
@@ -240,6 +242,16 @@ function textGen()
   text("PRESSURE", width/8, height/1.75);
   text("DEW POINT", width/2.8, height/1.75);
 
+  textSize(20);
+  text("Year Selected: ", width/1.44, height/2.75);
+  fill(255,0,0);
+  text(yearSelected, width/1.27, height/2.75);
+
+  fill(255);
+  textSize(16);
+  text("Visualization Legend:", width/1.55, height/2.25);
+  image(vizLegend, width/1.58, height/2.2, 400, 375);
+  
   textInit();
 }
 
